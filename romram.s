@@ -1,21 +1,21 @@
 		.align 2
 
-		.equ LATCH, 0x20000
+		.equ LATCH, 0x100001
 
-		.section vectors, #alloc
+		.section .vectors, #alloc
 
-resetsp:	.long 0xe0fff			| not using stack yet
+resetsp:	.long 0x001000			| not using stack yet
 resetpc:	.long _start			| the initial pc
 
 		.section .text
 
-_start:		move.w #0xd000,delay		| start with a long delay
+_start:		move.w #0xdf00,delay		| start with a long delay
 		movea.l #ledstart,%a0		| get start address
 		move.w #ledend-ledstart-1,%d0	| set the length
 		movea.l #ramstart,%a1
 
-copyloop:	move.b (%a0)+,(%a1)+		| copy a byte from a0 to a1
-		dbra %d0,copyloop		| more, down to -1
+1:		move.b (%a0)+,(%a1)+		| copy a byte from a0 to a1
+		dbra %d0,1b			| more, down to -1
 
 mainloop:	movea.l #ramstart,%a0		| get the ram copy
 		move.w #ledend-ledstart-1,%d0	| set the length
@@ -23,13 +23,17 @@ mainloop:	movea.l #ramstart,%a0		| get the ram copy
 next:		move.b (%a0),LATCH		| move byte to LATCH
 		not.b (%a0)+			| flip it on each run
 
-		move.w delay,%d1		| setup delay
-delayloop:	dbra %d1,delayloop		| hop on the spot
+		bsr dodelay
 
 		dbra %d0,next			| back for more
 
 		sub.w #0x2000,delay		| shorter delay next time
 		bra mainloop			| to the top!
+
+dodelay:	move.w delay,%d1		| setup delay
+1:		dbra %d1,1b			| hop on the spot
+
+		rts
 
 		.section .rodata
 
@@ -122,5 +126,6 @@ ledend:
 
 		.section .bss
 
+ramvectors:	.space 1024			| runtime vectors
 delay:		.space 2			| delay variable
 ramstart:					| and the pattern copy

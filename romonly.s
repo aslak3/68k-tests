@@ -4,7 +4,7 @@
 
 		.section vectors, #alloc
 
-resetsp:	.long 0xe0fff			| not using stack yet
+resetsp:	.long 0xe1000			| not using stack yet
 resetpc:	.long _start			| the initial pc
 
 		.section .text
