@@ -1,0 +1,11 @@
+Notes on building a tool chain.
+
+binutils:
+../binutils-2.32/configure --target=m68k-elf --prefix=/usr/local/m68k --disable-nls -v
+
+gcc:
+ ../gcc-8.3.0/configure --target=m68k-elf --prefix=/usr/local/m68k/ --without-headers --with-newlib -v --enable-languages=c  --with-multilib-list=rmprofile --disable-libssp
+
+newlib:
+../newlib-3.1.0/configure --prefix=/usr/local/m68k/ --target=m68k-elf --enable-newlib-nano-malloc --enable-lite-exit --disable-multilib
+
