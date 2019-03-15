@@ -1,4 +1,4 @@
-#define PORT_IO(port) (*(uint8_t *)(port))
+#define PORT_IO(port) (*(volatile uint8_t *)(port))
 
 /* Addresses */
 

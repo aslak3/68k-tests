@@ -11,7 +11,7 @@ BINS = prime.bin easter.bin floats.bin tiny.bin
 all: $(BINS)
 
 %.o: %.c
-	$(CC) -mcpu=68000 -Wall -g -O0 -c $< -o $@
+	$(CC) -mcpu=68000 -g -Wall -O2 -c $< -o $@
 
 %.o: %.s
 	$(AS) -mcpu=68000 --fatal-warnings $< -o $@

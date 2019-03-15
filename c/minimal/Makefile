@@ -10,14 +10,13 @@ OBJS = startup.o test.o
 all: $(BIN)
 
 %.o: %.c
-	$(CC) -mcpu=68000 -Wall -g -O0 -c $< -o $@
+	$(CC) -mcpu=68000 -g -Wall -O2 -c $< -o $@
 
 %.o: %.s
 	$(AS) -mcpu=68000 --fatal-warnings $< -o $@
 
 test.elf: $(OBJS)
-	$(CC) -mcpu=68000 -T linker.scr -ffreestanding -nostdlib -nostartfiles -static \
-		$^ -lgcc -o $@
+	$(CC) -mcpu=68000 -T linker.scr -nostdlib -nostartfiles $^ -lgcc -o $@
 
 %.bin: %.elf
 	$(OBJCOPY) -S -O binary $< $@.t

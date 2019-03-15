@@ -1,4 +1,4 @@
-#define PORT_IO(port) (*(unsigned char *)(port))
+#define PORT_IO(port) (*(volatile unsigned char *)(port))
 
 #define LED 0x100001
 #define BUZZER 0x100003
@@ -35,5 +35,5 @@ int main(void)
 void do_delay(void)
 {
 	for (delay = 0; delay < 0xffff; delay++)
-		;
+		__asm__ __volatile__("");
 }
