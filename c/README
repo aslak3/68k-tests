@@ -1,11 +1,16 @@
 Notes on building a tool chain.
 
 binutils:
-../binutils-2.32/configure --target=m68k-elf --prefix=/usr/local/m68k --disable-nls -v
+../binutils-2.32/configure --target=m68k-elf --prefix=/usr/local/m68k-elf --disable-nls -v
 
 gcc:
- ../gcc-8.3.0/configure --target=m68k-elf --prefix=/usr/local/m68k/ --without-headers --with-newlib -v --enable-languages=c  --with-multilib-list=rmprofile --disable-libssp
+ ../gcc-8.3.0/configure --target=m68k-elf --prefix=/usr/local/m68k/-elf --without-headers --with-newlib -v --enable-languages=c  --with-multilib-list=rmprofile --disable-libssp
+Add -I /usr/local/m68k
 
-newlib:
-../newlib-3.1.0/configure --prefix=/usr/local/m68k/ --target=m68k-elf --enable-newlib-nano-malloc --enable-lite-exit --disable-multilib
+newlib: (currently not used)
+../newlib-3.1.0/configure --prefix=/usr/local/m68k-elf/ --target=m68k-elf --enable-newlib-nano-malloc --enable-lite-exit --disable-multilib
 
+Baselibc:
+make PLATFORM=m68k-elf
+cp -vr include/* /usr/local/m68k-elf/include
+cp libc.a /usr/local/m68k-elf/lib/gcc/m68k-elf/*/m68000/libc.a
