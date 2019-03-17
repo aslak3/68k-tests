@@ -1,7 +1,7 @@
-CC = /usr/local/m68k/bin/m68k-elf-gcc
-AS = /usr/local/m68k/bin/m68k-elf-as
-LD = /usr/local/m68k/bin/m68k-elf-ld
-OBJCOPY = /usr/local/m68k/bin/m68k-elf-objcopy
+CC = m68k-elf-gcc
+AS = m68k-elf-as
+LD = m68k-elf-ld
+OBJCOPY = m68k-elf-objcopy
 FLASHER = ../../../68k-monitor/tools/flasher
 
 BIN = test.bin

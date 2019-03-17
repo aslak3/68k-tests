@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "include/serial.h" 
-
 int year, month, day;
 
 /* This function calculates the date of Easter in year y,
@@ -54,19 +52,14 @@ void dateofeaster(int y, int *d, int *m)
 
 int main(void)
 {
-	char buffer[100];
 
-	memset(buffer, 0, 100);
-	
-	serialinit();
-	putstring((uint8_t *) "Dates of Easter:\r\n");
+	printf("Dates of Easter:\r\n");
 
 	for (year = 1980; year <= 2020; year++)
 	{
 		dateofeaster(year, &day, &month);
-		snprintf(buffer,25,"%d %s %d\r\n", year,
+		printf("%d %s %d\r\n", year,
 			(month == 3) ? "March" : "April", day);
-		putstring((uint8_t *) buffer);
       }
 
       while(1);

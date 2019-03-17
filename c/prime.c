@@ -3,47 +3,42 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "include/serial.h"
-
 int main(void)
 {
-	uint8_t buffer[100];
+	char buffer[100];
 	int test, max;
 
 	memset(buffer, 0, 100);
 
-	serialinit();
-
-	putstring((uint8_t *)"\r\nEnter the highest integer to test: ");
-	getstring(buffer);
-	putstring((uint8_t *)"\r\n");
-	max = atoi((char *) buffer);
-
-	if (max < 2)
+	while(1)
 	{
-		putstring((uint8_t *) "Number must be greater then 1\r\n");
-		return 1;
-	}
+		printf("\r\nEnter the highest integer to test: ");
+		fgets(buffer, 100, stdin);
+		max = atoi(buffer);
 
-	test = max;
-
-	for (test = 2; test <= max; test++)
-	{
-		int check, flag = 0;
-
-		for (check = 2; check <= test / 2; check++)
+		if (max < 2)
 		{
-			if (!(test % check))
-			{
-				flag = 1;
-				break;
-			}
+			printf("Number must be greater then 1\r\n");
+			continue;
 		}
 
-		if (flag == 0)
+		test = max;
+
+		for (test = 2; test <= max; test++)
 		{
-			snprintf((char *) buffer, 100, "%d is a prime number.\r\n", test);
-			putstring(buffer);
+			int check, flag = 0;
+
+			for (check = 2; check <= test / 2; check++)
+			{
+				if (!(test % check))
+				{
+					flag = 1;
+					break;
+				}
+				}
+
+			if (flag == 0)
+				printf("%d is a prime number.\r\n", test);
 		}
 	}
 

@@ -17,6 +17,8 @@ skipdata:	movea.l #bss_start,%a0
 		subq.l #1,%d0
 		bne 1b
 
-skipbss:	jsr main
-		bra skipbss
+skipbss:	jsr serialinit
+
+		jsr main
+1:		bra 1b
 
